@@ -26,11 +26,21 @@ const UpdateMovieForm = (props) => {
     //console should log the movie for the movie page a user is looking at
     // console.log(movie);
 
+    const handleStar = index => e => {
+        setMovie({
+            ...movie,
+            stars: movie.stars.map((star, starIndex) => {
+                return starIndex === index ? e.target.value : star;
+            })
+        })
+    }
+
     const changeHandler = (e) => {
         e.preventDefault();
         setMovie({
             ...movie,
             [e.target.name]: e.target.type === 'number' ? +e.target.value: e.target.value
+            // [e.target.name]: e.target.value === {starName} ? +e.target.value: e.target.value
         });
     }
 
@@ -68,13 +78,18 @@ const UpdateMovieForm = (props) => {
                         onChange={changeHandler}
                         value={movie.metascore}
                     />
-                    <input
-                        type='text'
-                        name='stars'
-                        placeholder='stars'
-                        onChange={changeHandler}
-                        value={movie.stars}
-                    />
+                    {movie.stars.map((starName, index) => {
+                        return (
+                            <input
+                                key={index}
+                                type='text'
+                                name='star'
+                                placeholder='star'
+                                onChange={handleStar(index)}
+                                value={starName}
+                            />
+                        )
+                    })}
                     <button type='submit'>Update</button>
                 </form>
             </div>
