@@ -30,7 +30,7 @@ const UpdateMovieForm = (props) => {
         e.preventDefault();
         setMovie({
             ...movie,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.type === 'number' ? +e.target.value: e.target.value
         });
     }
 
