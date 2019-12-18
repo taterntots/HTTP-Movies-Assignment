@@ -34,7 +34,7 @@ export default class Movie extends React.Component {
 
   editMovie = (e) => {
     e.preventDefault();
-    this.props.history.push(`/update-movie/${this.state.id}`);
+    this.props.history.push(`/update-movie/${this.state.movie.id}`);
   }
 
   render() {
