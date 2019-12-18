@@ -1,76 +1,73 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default class UpdateMovieForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: this.props.match.params.id,
-            title: '',
-            director: '',
-            metascore: '',
-            stars: []
-        }
-    }
+const initialState = {
+    id: null,
+    title: '',
+    director: '',
+    metascore: '',
+    stars: []
+}
 
-    // useEffect(() => {
-    //     const movieToEdit = this.props.items.find()
-    // })
-
-    changeHandler = (e) => {
+const UpdateMovieForm = (props) => {
+    const [movie, setMovie] = useState(initialState);
+    
+    const changeHandler = (e) => {
         e.preventDefault();
-        this.setState({
-            ...this.state,
+        setMovie({
+            ...movie,
             [e.target.name]: e.target.value
         });
     }
 
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        console.log(movie);
         axios
-            .put(`http://localhost:3000/movies/${this.state.id}`, this.state)
+            .put(`http://localhost:5000/api/movies/${movie.id}`, movie)
             .then(res => {
                 console.log(res);
+                // this.setState(res.data)
+                // console.log(this.state);
+                // this.props.history.push(`movies/${this.state.id}`);
             })
-        this.props.history.push(`1`);
     }
 
-    render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <input
                         type='text'
                         name='title'
                         placeholder='title'
-                        onChange={this.changeHandler}
-                        value={this.state.title}
+                        onChange={changeHandler}
+                        value={movie.title}
                     />
                     <input
                         type='text'
                         name='director'
                         placeholder='director'
-                        onChange={this.changeHandler}
-                        value={this.state.director}
+                        onChange={changeHandler}
+                        value={movie.director}
                     />
                     <input
                         type='number'
                         name='metascore'
                         placeholder='metascore'
-                        onChange={this.changeHandler}
-                        value={this.state.metascore}
+                        onChange={changeHandler}
+                        value={movie.metascore}
                     />
                     <input
                         type='text'
                         name='stars'
                         placeholder='stars'
-                        onChange={this.changeHandler}
-                        value={this.state.stars}
+                        onChange={changeHandler}
+                        value={movie.stars}
                     />
                     <button type='submit'>Update</button>
                 </form>
             </div>
         )
-    }
 }
+
+export default UpdateMovieForm;
