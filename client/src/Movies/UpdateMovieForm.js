@@ -11,7 +11,21 @@ const initialState = {
 
 const UpdateMovieForm = (props) => {
     const [movie, setMovie] = useState(initialState);
-    
+    const id = props.match.params.id;
+    // console.log(id);
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:5000/api/movies/${id}`)
+            .then(res => {
+                // console.log(res);
+                setMovie(res.data)
+            })
+    }, [])
+
+    //console should log the movie for the movie page a user is looking at
+    // console.log(movie);
+
     const changeHandler = (e) => {
         e.preventDefault();
         setMovie({
@@ -22,14 +36,11 @@ const UpdateMovieForm = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(movie);
         axios
-            .put(`http://localhost:5000/api/movies/${movie.id}`, movie)
+            .put(`http://localhost:5000/api/movies/${id}`, movie)
             .then(res => {
-                console.log(res);
-                // this.setState(res.data)
-                // console.log(this.state);
-                // this.props.history.push(`movies/${this.state.id}`);
+                console.log(res.data);
+                props.history.push(`/movies/${id}`);
             })
     }
 
