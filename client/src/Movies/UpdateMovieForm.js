@@ -21,12 +21,12 @@ const UpdateMovieForm = (props) => {
                 // console.log(res);
                 setMovie(res.data)
             })
-    }, [])
+    }, [id])
 
     //console should log the movie for the movie page a user is looking at
     // console.log(movie);
 
-    const handleStar = index => e => {
+    const handleStar = (index) => e => {
         setMovie({
             ...movie,
             stars: movie.stars.map((star, starIndex) => {
@@ -40,7 +40,6 @@ const UpdateMovieForm = (props) => {
         setMovie({
             ...movie,
             [e.target.name]: e.target.type === 'number' ? +e.target.value: e.target.value
-            // [e.target.name]: e.target.value === {starName} ? +e.target.value: e.target.value
         });
     }
 
